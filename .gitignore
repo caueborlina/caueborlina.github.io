@@ -1,0 +1,14 @@
+# macOS / app clutter
+.DS_Store
+/Claude outputs/
+
+# Full-size originals (the site uses the smaller copies in images/)
+/*.webp
+/*.png
+/*.tif
+/*.HEIC
+/*.heic
+/*.jpeg
+/MqB_V2.jpg
+/europa.jpg
+/grains_QDM.pdf

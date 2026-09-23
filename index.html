@@ -10,8 +10,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap">
 <style>
 :root{
-  --ground:#F3F4F1; --surface:#FFFFFF; --ink:#15181D; --muted:#5A626D; --rule:#D8DBD5;
-  --neg:#2748A8; --pos:#B23A2A; --neg-soft:#E3E8F6; --pos-soft:#F5E4E1;
+  color-scheme:dark;
+  --ground:#2F4156; --surface:#3A4F68; --ink:#F5EFEB; --muted:#C8D9E6; --rule:#4B6079;
+  --neg:#C8D9E6; --pos:#F4B8A0; --neg-soft:#3E5673; --pos-soft:#4E4556;
   --display:"Inter", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   --body:"Inter", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   --mono:"Inter", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
@@ -20,14 +21,14 @@
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     color-scheme:dark;
-    --ground:#0F1216; --surface:#171B21; --ink:#E7E9E4; --muted:#9AA2AC; --rule:#2A3038;
-    --neg:#86A0F2; --pos:#F08068; --neg-soft:#1B2340; --pos-soft:#3A1E1A;
+    --ground:#2F4156; --surface:#3A4F68; --ink:#F5EFEB; --muted:#C8D9E6; --rule:#4B6079;
+    --neg:#C8D9E6; --pos:#F4B8A0; --neg-soft:#3E5673; --pos-soft:#4E4556;
   }
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
-  --ground:#0F1216; --surface:#171B21; --ink:#E7E9E4; --muted:#9AA2AC; --rule:#2A3038;
-  --neg:#86A0F2; --pos:#F08068; --neg-soft:#1B2340; --pos-soft:#3A1E1A;
+  --ground:#2F4156; --surface:#3A4F68; --ink:#F5EFEB; --muted:#C8D9E6; --rule:#4B6079;
+  --neg:#C8D9E6; --pos:#F4B8A0; --neg-soft:#3E5673; --pos-soft:#4E4556;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -41,33 +42,37 @@ h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:-.025em;text-
 
 /* nav */
 header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:color-mix(in srgb,var(--ground) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
-.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px}
-.brand{font:600 20.5px/1 var(--display);text-decoration:none;white-space:nowrap}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:72px}
+.brand{font:700 26px/1 var(--display);text-decoration:none;white-space:nowrap}
 .brand span{color:var(--muted);font-weight:400}
 .nav ul{display:flex;gap:4px;list-style:none;margin:0;padding:0;overflow-x:auto;scrollbar-width:none}
 .nav ul::-webkit-scrollbar{display:none}
-.nav ul a{display:block;padding:6px 10px;font:500 15px/1 var(--mono);text-decoration:none;color:var(--muted);border-radius:4px;white-space:nowrap}
+.nav ul a{display:block;padding:8px 12px;font:500 18px/1 var(--mono);text-decoration:none;color:var(--muted);border-radius:4px;white-space:nowrap}
 .nav ul a:hover{color:var(--ink);background:var(--surface)}
 @media (max-width:720px){.nav .wrap{height:auto;flex-direction:column;align-items:stretch;padding-block:10px;gap:6px}.nav ul{margin-inline:-10px}}
 
 /* hero */
 .hero{position:relative;border-bottom:1px solid var(--rule);overflow:hidden}
-.hero .wrap{position:relative;display:grid;grid-template-columns:1.35fr 1fr;gap:clamp(24px,5vw,64px);align-items:end;padding-block:clamp(48px,8vw,96px) 40px}
-.hero h1{font-size:clamp(40px,6.4vw,76px);line-height:.98;font-weight:700;margin-block:10px 18px}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1fr minmax(240px,320px);gap:clamp(24px,5vw,64px);align-items:end;padding-block:clamp(20px,3vw,32px) 40px}
+.hero h1{font-size:clamp(30px,3.8vw,44px);line-height:1;font-weight:700;margin-block:0 18px}
 .hero h1 .say{display:inline-block;vertical-align:middle;font:500 14px/1 var(--mono);letter-spacing:.04em;text-transform:none;border:1px solid var(--rule);background:var(--surface);color:var(--muted);padding:6px 8px;border-radius:99px;text-decoration:none;margin-left:6px;transform:translateY(-8px)}
 .hero h1 .say:hover{color:var(--ink)}
 .hero p{margin:0 0 14px;max-width:62ch}
-.hero .role{font-size:22px}
+.hero .role{font-size:18px;line-height:1.5;border-left:3px solid var(--neg);padding-left:16px;margin-bottom:20px}
 .hero .role em{font-style:italic}
+.hero .role span,.hero .degrees span{display:block}
+.hero .role .title{font-size:20px;font-weight:600;margin-bottom:6px}
+.hero .role .uni{margin-top:8px;font:700 14px/1.2 var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--neg)}
+@media (max-width:600px){.hero h1 .say{display:table;margin:10px 0 0;transform:none}}
+@media (min-width:1000px){.hero .role .title{white-space:nowrap}}
+.hero .degrees{color:var(--muted);font-size:15px;line-height:1.55}
 .links{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
 .btn{display:inline-flex;align-items:center;gap:8px;font:500 15px/1 var(--mono);padding:11px 14px;border:1px solid var(--ink);text-decoration:none;background:transparent;color:var(--ink);cursor:pointer}
 .btn.solid{background:var(--ink);color:var(--ground)}
 .btn:hover{background:var(--ink);color:var(--ground)}
-.portrait{aspect-ratio:4/5;max-width:100%;border:1px solid var(--rule);background:
-  repeating-linear-gradient(135deg,transparent 0 10px,color-mix(in srgb,var(--rule) 60%,transparent) 10px 11px),var(--surface);
-  display:grid;place-items:center;text-align:center;color:var(--muted)}
-.portrait .label{display:block;margin-top:6px}
-@media (max-width:820px){.hero .wrap{grid-template-columns:1fr}.portrait{aspect-ratio:3/2;order:-1;max-height:280px}}
+.portrait{aspect-ratio:4/5;width:100%;max-width:320px;justify-self:end;margin:0;border:1px solid var(--rule);background:var(--surface);overflow:hidden}
+.portrait img{display:block;width:100%;height:100%;object-fit:cover;object-position:82% 30%}
+@media (max-width:820px){.hero .wrap{grid-template-columns:1fr}.portrait{aspect-ratio:3/2;order:-1;max-height:280px;max-width:none}.portrait img{object-position:50% 30%}}
 
 /* recruiting */
 .recruit{background:var(--ink);color:var(--ground)}
@@ -80,11 +85,39 @@ header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;backgroun
 /* sections */
 section.block{padding-block:clamp(56px,8vw,96px);border-bottom:1px solid var(--rule)}
 .sec-head{display:grid;grid-template-columns:220px 1fr;gap:24px;margin-bottom:36px;align-items:baseline}
+.sec-head>.label{font-size:20px;font-weight:600;letter-spacing:.1em;color:var(--ink)}
+.sec-head .acr{font:italic 600 24px/1.2 var(--display);letter-spacing:.01em;color:var(--muted);margin-top:12px}
+.sec-head .acr+p{margin-top:8px;line-height:1.2}
+@media (min-width:821px){.sec-head h2.oneline{white-space:nowrap}}
 .sec-head h2{font-size:clamp(30px,4vw,44px);line-height:1.05}
 .sec-head p{margin:10px 0 0;color:var(--muted);max-width:62ch}
 @media (max-width:820px){.sec-head{grid-template-columns:1fr;gap:6px}}
 
 /* research */
+.topics{display:grid;gap:clamp(56px,8vw,96px)}
+.topic{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(24px,4vw,56px);align-items:start;scroll-margin-top:96px}
+.topic:nth-child(even) .fig{order:2}
+.fig{margin:0}
+@media (min-width:821px){.fig{position:sticky;top:96px}}
+.fig .shot+.shot{margin-top:24px}
+.fig .main{border:1px solid var(--rule);background:var(--surface);overflow:hidden;position:relative}
+.fig .main.ph{aspect-ratio:4/3}
+.fig .main img{width:100%;height:auto;display:block}
+.fig .main.tall{max-width:400px}
+.fig figcaption{font-size:14px;line-height:1.45;color:var(--muted);margin-top:10px}
+.fig .ph canvas{width:100%;height:100%;display:block}
+.fig .ph span{position:absolute;left:12px;bottom:10px;font:600 12.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:color-mix(in srgb,var(--ground) 70%,transparent);padding:6px 8px}
+.topic h3{font-size:clamp(26px,3vw,34px);line-height:1.15;margin:8px 0 14px}
+.topic .desc{margin:0 0 12px}
+.tpubs-h{font:600 13px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:32px 0 6px}
+.tpubs{list-style:none;margin:0;padding:0}
+.tpubs li{display:grid;grid-template-columns:52px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid var(--rule);font-size:16.5px;line-height:1.45}
+.tpubs .y{font:500 14.5px/1.6 var(--mono);color:var(--muted)}
+.tpubs a{text-decoration:none;font-weight:500}
+.tpubs a:hover{text-decoration:underline;text-underline-offset:3px}
+.tpubs .j{display:block;font-size:14.5px;color:var(--muted);font-style:italic}
+.tpubs .st{font:600 11px/1 var(--mono);text-transform:uppercase;letter-spacing:.06em;padding:3px 5px;margin-left:6px;background:var(--pos-soft);color:var(--pos);vertical-align:2px;font-style:normal}
+@media (max-width:820px){.topic{grid-template-columns:1fr}.topic:nth-child(even) .fig{order:0}}
 .research{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
 .proj{background:var(--ground);padding:24px;display:flex;flex-direction:column;gap:10px}
 .proj canvas{width:100%;height:120px;display:block;border:1px solid var(--rule);background:var(--surface)}
@@ -95,13 +128,23 @@ section.block{padding-block:clamp(56px,8vw,96px);border-bottom:1px solid var(--r
 .proj.current .tag.now{border-color:var(--pos);color:var(--pos)}
 
 /* lab */
-.team{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:28px 24px}
-.person{display:grid;grid-template-columns:56px 1fr;gap:14px;align-items:start}
-.avatar{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font:600 20.5px/1 var(--display);color:var(--ink);border:1px solid var(--rule)}
+.team{--av:110px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:28px 24px}
+.person{display:grid;grid-template-columns:var(--av) 1fr;gap:18px;align-content:start;align-items:start}
+.avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
+.avatar{width:var(--av);height:var(--av);border-radius:50%;overflow:hidden;display:grid;place-items:center;font:600 34px/1 var(--display);color:var(--ink);border:1px solid var(--rule)}
 .person h3{font-size:19.5px;line-height:1.25}
 .person .label{margin-top:3px;display:block;font-size:12.5px}
 .person p{margin:6px 0 0;font-size:17px;line-height:1.5;color:var(--muted)}
 .person a{font:500 14px/1 var(--mono);color:var(--neg)}
+.prev{list-style:none;margin:0;padding:0}
+.prev li{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 5px;padding:10px 0;border-top:1px solid var(--rule)}
+.prev li:first-child{border-top:0}
+.prev .n{font:600 18px/1.3 var(--display)}
+.prev .n a{text-decoration:none}
+.prev .n a:hover{text-decoration:underline;text-underline-offset:3px}
+.prev .r{font-size:15px;color:var(--muted);margin-left:9px}
+.prev .now{font-size:15px;color:var(--muted)}
+.prev .r:has(+ .now)::after{content:","}
 .subhead{font:600 23px/1.2 var(--display);margin:48px 0 20px;padding-top:24px;border-top:1px solid var(--rule)}
 
 /* publications */
@@ -109,7 +152,6 @@ section.block{padding-block:clamp(56px,8vw,96px);border-bottom:1px solid var(--r
 .seg{display:inline-flex;border:1px solid var(--rule);background:var(--surface)}
 .seg button{font:500 14px/1 var(--mono);padding:10px 12px;border:0;background:transparent;color:var(--muted);cursor:pointer}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--ground)}
-#q{flex:1;min-width:180px;font:400 17px/1 var(--body);padding:10px 12px;border:1px solid var(--rule);background:var(--surface);color:var(--ink)}
 .count{font:400 14px/1 var(--mono);color:var(--muted)}
 .pubs{list-style:none;margin:0;padding:0}
 .pub{display:grid;grid-template-columns:72px 1fr;gap:16px;padding:18px 0;border-top:1px solid var(--rule)}
@@ -149,26 +191,26 @@ footer{padding-block:40px 56px;color:var(--muted);font-size:17px}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
 footer .mail{font:500 16px/1 var(--mono);color:var(--ink);user-select:all}
 .note{font:400 14px/1.5 var(--mono);color:var(--muted);margin-top:8px}
+/* theme: navy */
+.recruit{background:#F5EFEB;color:#2F4156}.recruit .btn{border-color:#2F4156;color:#2F4156}.recruit .btn:hover{background:#2F4156;color:#F5EFEB}.btn.solid{background:#F5EFEB;color:#2F4156}
 </style>
 
 <meta property="og:title" content="Cauê Borlina">
 <meta property="og:description" content="Planetary scientist and Assistant Professor at Purdue University. Paleomagnetism, planet formation and habitability.">
 <meta property="og:url" content="https://caueborlina.com/">
 <meta name="twitter:card" content="summary">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2315181D'/%3E%3Ctext x='16' y='22' font-family='Arial' font-weight='700' font-size='15' fill='%23F3F4F1' text-anchor='middle'%3ECB%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"%3E%3Crect width="32" height="32" rx="7" fill="%232F4156"/%3E%3Cg transform="translate(-1.5 1.5) rotate(45 16 16)"%3E%3Cpath d="M10.5 10V17.5A5.5 5.5 0 0 0 21.5 17.5V10" fill="none" stroke="%23E4574B" stroke-width="5.6"/%3E%3Crect x="7.7" y="6.6" width="5.6" height="4.4" fill="%23EEF1F3"/%3E%3Crect x="18.7" y="6.6" width="5.6" height="4.4" fill="%23EEF1F3"/%3E%3C/g%3E%3C/svg%3E'>
 <style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
 <header class="nav">
   <div class="wrap">
-    <a class="brand" href="#top">Cauê Borlina <span>/ Purdue EAPS</span></a>
+    <a class="brand" href="#top">Cauê Borlina</a>
     <nav aria-label="Sections"><ul>
       <li><a href="#lab">Lab</a></li>
       <li><a href="#research">Research</a></li>
       <li><a href="#publications">Publications</a></li>
-      <li><a href="#outreach">Outreach</a></li>
       <li><a href="#press">Press</a></li>
-      <li><a href="#cv">CV</a></li>
     </ul></nav>
   </div>
 </header>
@@ -177,24 +219,23 @@ footer .mail{font:500 16px/1 var(--mono);color:var(--ink);user-select:all}
 <section class="hero" aria-label="About">
   <div class="wrap">
     <div class="hero-card">
-      <div class="label">Planetary scientist · Paleomagnetist</div>
-      <h1>Cauê Borlina <a class="say" href="https://www.name-coach.com/caue-borlina" target="_blank" rel="noopener" title="Hear how to pronounce my name">▶ say it</a></h1>
-      <p class="role"><em>Gerald H. &amp; Sharon D. Krockover New Frontiers</em> Assistant Professor, Earth, Atmospheric, and Planetary Sciences, Purdue University.</p>
-      <p>I study how planets form and evolve, and how those histories shape whether a world can become habitable. My tools are magnetic fields: the faint records locked inside meteorites, ancient crystals, and cave deposits, read with micro‑paleomagnetism.</p>
-      <p style="color:var(--muted);font-size:15px">PhD, Planetary Science, MIT · BSE, Aerospace Engineering &amp; Minor in Physics, University of Michigan</p>
+      <h1>Cauê Borlina <a class="say" href="https://www.name-coach.com/caue-borlina" target="_blank" rel="noopener" title="Hear how to pronounce my name">▶ how to say my name</a></h1>
+      <p class="role"><span class="title"><em>Gerald H. &amp; Sharon D. Krockover New Frontiers</em> Assistant Professor</span><span>Department of Earth, Atmospheric, and Planetary Sciences</span><span>Department of Physics and Astronomy (by courtesy)</span><span class="uni">Purdue University</span></p>
+      <p>I study how magnetic fields, past and present, influence planetary formation, evolution, and habitability. Our lab combines a range of approaches, from paleomagnetism and laboratory analyses to numerical modeling, to investigate magnetism throughout the solar system, from the magnetic environment of the early solar nebula to the interiors of Earth and icy moons, while also exploring the role of magnetism in the future of space exploration.</p>
+      <p class="degrees"><span>PhD, Planetary Science, MIT</span><span>BSE, Aerospace Engineering &amp; Minor in Physics, University of Michigan</span></p>
       <div class="links">
         <a class="btn solid" href="#lab">Meet the lab</a>
         <a class="btn" href="https://scholar.google.com/citations?user=F0EQqV0AAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar ↗</a>
-        <a class="btn" href="https://twitter.com/caueborlina" target="_blank" rel="noopener">@caueborlina ↗</a>
+        <a class="btn" href="Borlina_Caue_CV.pdf" target="_blank" rel="noopener">CV ↗</a>
       </div>
     </div>
-    <div class="portrait"><div>Your portrait<span class="label">4:5 photo goes here</span></div></div>
+    <figure class="portrait"><img src="portrait.jpg" alt="Portrait of Cauê Borlina" width="1800" height="1201" decoding="async" fetchpriority="high"></figure>
   </div>
 </section>
 
 <div class="recruit">
   <div class="wrap">
-    <p><strong>Join the Purdue Planetary Magnetics Lab.</strong> I'm looking for graduate students and postdocs interested in meteorites, planetary magnetism and habitability.</p>
+    <p><strong>Join the Purdue Magnetics Lab.</strong> I will be recruiting 2 PhD students for Fall 2027. Feel free to reach out to discuss potential opportunities.</p>
     <a class="btn" href="mailto:cborlina@purdue.edu">cborlina@purdue.edu</a>
   </div>
 </div>
@@ -204,13 +245,13 @@ footer .mail{font:500 16px/1 var(--mono);color:var(--ink);user-select:all}
     <div class="sec-head">
       <div class="label">The lab</div>
       <div>
-        <h2>Purdue Planetary Magnetics Laboratory</h2>
-        <p>We measure magnetic fields frozen into rocks, from grains a few microns across to whole meteorites, to reconstruct the early solar system, planetary dynamos and the conditions for life. We also build VR tools that make geology fieldwork accessible.</p>
+        <h2 class="oneline">Purdue Magnetics Laboratory</h2>
+        <p>Meet the people of the PMag Lab</p>
       </div>
     </div>
     <div class="team" id="team"></div>
-    <div class="subhead">Alumni</div>
-    <div class="team" id="alumni"></div>
+    <div class="subhead">Previous members</div>
+    <ul class="prev" id="alumni"></ul>
   </div>
 </section>
 
@@ -219,11 +260,10 @@ footer .mail{font:500 16px/1 var(--mono);color:var(--ink);user-select:all}
     <div class="sec-head">
       <div class="label">Research</div>
       <div>
-        <h2>From the first million years to the Hadean Earth</h2>
-        <p>Magnetic fields leave records that last billions of years. We use them to test how disks, planets and dynamos worked, and when.</p>
+        <h2>Magnetic fields across the solar system</h2>
       </div>
     </div>
-    <div class="research" id="projects"></div>
+    <div class="topics" id="topics"></div>
   </div>
 </section>
 
@@ -236,38 +276,7 @@ footer .mail{font:500 16px/1 var(--mono);color:var(--ink);user-select:all}
         <p>Full and current list on <a href="https://scholar.google.com/citations?user=F0EQqV0AAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>.</p>
       </div>
     </div>
-    <div class="pub-tools">
-      <div class="seg" role="group" aria-label="Filter publications">
-        <button type="button" id="f-all" aria-pressed="true">All</button>
-        <button type="button" id="f-first" aria-pressed="false">First author</button>
-        <button type="button" id="f-pipe" aria-pressed="false">In progress</button>
-      </div>
-      <input id="q" type="search" placeholder="Search titles, journals, co‑authors…" aria-label="Search publications">
-      <span class="count" id="count"></span>
-    </div>
     <ol class="pubs" id="pubs"></ol>
-  </div>
-</section>
-
-<section class="block" id="outreach">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="label">Outreach &amp; Education</div>
-      <div><h2>Bringing the field to everyone</h2></div>
-    </div>
-    <div class="two">
-      <div>
-        <div class="label">Purdue · ongoing</div>
-        <h3>VR in the Geosciences</h3>
-        <p>A Purdue‑funded initiative bringing virtual reality into geoscience teaching. We're reconstructing a cave environment for the Indiana Department of Natural Resources at the Indiana State Fair, and building classroom experiences from LiDAR scans of Carlsbad Caverns, New Mexico.</p>
-      </div>
-      <div>
-        <div class="label">MIT · since 2019</div>
-        <h3>Minds Across Generations</h3>
-        <p>Co‑founded an initiative that brings MIT researchers to Lasell Village in Newton, Massachusetts, for 40‑minute talks to older adult learners, a very engaged audience and great practice in science communication.</p>
-        <p><a href="https://medium.com/mit-media-lab/lifelong-learners-insights-from-an-intergenerational-initiative-a043e6e058e9" target="_blank" rel="noopener">Read about it on the MIT Media Lab blog ↗</a></p>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -281,15 +290,6 @@ footer .mail{font:500 16px/1 var(--mono);color:var(--ink);user-select:all}
   </div>
 </section>
 
-<section class="block" id="cv">
-  <div class="wrap cv">
-    <div>
-      <div class="label">Curriculum vitae</div>
-      <h2>Full CV (PDF)</h2>
-    </div>
-    <a class="btn solid" href="Borlina_Caue_CV.pdf" target="_blank" rel="noopener">Open CV ↗</a>
-  </div>
-</section>
 </main>
 
 <footer>
@@ -302,57 +302,109 @@ footer .mail{font:500 16px/1 var(--mono);color:var(--ink);user-select:all}
 <script>
 /* ---------- data ---------- */
 const team=[
- ["Katie E. Bristol","Postdoctoral Researcher","Magnetic records in meteorites and what they reveal about young stellar objects and protoplanetary disks. PhD, University of Florida.",[["Website","https://katiebristol.github.io"],["Scholar","https://scholar.google.com/citations?user=Y6_xRjkAAAAJ&hl=en"]]],
- ["Sedinam Biassey-Bogart","Graduate Student","Remanent magnetism in the crusts of icy moons, using convection simulations."],
- ["Roshini Saravanan","Graduate Student","Earth's dynamo in the Ediacaran and its link to early complex life."],
- ["Emma Kostecki","Graduate Student (MS)","Paleomagnetism of speleothems and connections to planetary habitability."],
- ["Allison Loper","Undergraduate","Lunar magnetic anomalies and radiation shielding for human missions."],
- ["Brianna Petruccelli","Undergraduate","Lightning's role in the remanent magnetism of the Martian surface."],
- ["Jadden Picardal","Undergraduate","VR simulation to make planetary fieldwork accessible.",[["Website","https://jadden.xyz"]]],
- ["Hiya Samanta","Undergraduate","A gamified VR cave environment for virtual field trips."],
- ["Shane Woloszyn","Undergraduate","Building the VR cave experience.",[["Website","https://www.shanewoloszyn.com"]]],
- ["Anushka Bhave","Undergraduate","VR cave exploration for education."]
+ ["Cauê Borlina","Principal Investigator",""],
+ ["Regupathi Angappan","Postdoctoral Researcher","Modeling the role of magnetic fields in giant-planet formation."],
+ ["Sedinam Biassey-Bogart","PhD Student","Investigating remanent magnetism in icy moons."],
+ ["Melissa de Andrade Nunes","PhD Student · University of São Paulo, Brazil","Investigating lightning's role in the remanent magnetism of the Martian surface."],
+ ["Roshini Saravanan","Master's Student","Studying Earth's dynamo in the Ediacaran and its link to early complex life."],
+ ["Emma Kostecki","Master's Student","Studying the paleomagnetism of speleothems and the recent evolution of Earth's magnetic field."],
+ ["Brianna Petruccelli","Undergraduate","Investigating lightning's role in the remanent magnetism of the Martian surface."],
+ ["Hiya Samanta","Undergraduate","Developing VR cave experiences for formal and informal learning."],
+ ["Katrina Boland","Undergraduate","Building a null-magnetic-field setup for biomagnetism experiments."],
+ ["Elizabeth Gray","Undergraduate","Studying the paleomagnetism of meteorites."],
+ ["Gabriel Chambers","Undergraduate","Developing low-magnetic-noise sample holders."]
 ];
+// Previous members: [name, role in the lab, where they are now, link (optional)]
+// Fill in "where they are now", e.g. "PhD student, MIT". Leave "" to hide it.
 const alumni=[
- ["Henry Lee","Undergraduate","Built Indiana cave VR models for education.",[["Portfolio","https://lofitea-portfolio.vercel.app/"]]],
- ["Siya Jariwala","Undergraduate","VR environments for formal and informal education."]
+ ["Katie Bristol","former NSF Postdoctoral Researcher in the lab, now Staff Scientist at the Institute for Rock Magnetism, University of Minnesota","","https://katiebristol.github.io"],
+ ["Allison Loper","Undergraduate",""],
+ ["Anushka Bhave","Undergraduate",""],
+ ["Henry Lee","Undergraduate","","https://lofitea-portfolio.vercel.app/"],
+ ["Siya Jariwala","Undergraduate",""]
 ];
-const projects=[
- {t:"Magnetic fields in the protoplanetary disk",d:"Meteorites preserve magnetic fields from the solar nebula. Measuring them tells us how disks transported material and how long they lasted, during the solar system's first few million years.",tags:["Meteorites","Solar nebula"],cur:1,seed:1},
- {t:"High-resolution records from speleothems",d:"Cave deposits grow continuously, making them ideal for high-resolution records of short-term changes in Earth's field. Magnetic microscopy lets us read them at sub-millimeter scale.",tags:["Speleothems","Magnetic microscopy"],cur:1,seed:2},
- {t:"The formation of giant planets",d:"Adding magnetic fields to models of giant-planet formation to understand how planetary systems take shape.",tags:["Modeling"],cur:1,seed:3},
- {t:"The Hadean Earth",d:"When did Earth's magnetic field begin? We test the paleomagnetic record of the oldest minerals on Earth, the Jack Hills zircons.",tags:["Zircons","Geodynamo"],seed:4},
- {t:"The Pasteur Point and the evolution of life",d:"The switch from fermentation to respiration at low oxygen levels, and what it means for life around the Great Oxidation Event.",tags:["Geobiology"],seed:5},
- {t:"Dust in Owens Lake, California",d:"How drought changed dust lifting at Owens Lake, and how aerosols feed back on clouds and climate models.",tags:["Atmospheres"],seed:6},
- {t:"NASA Mars Science Laboratory",d:"Curiosity rover data at Gale Crater: thermal inertia, surface energy budget, and diagenesis in Mount Sharp's sediments.",tags:["Mars","MSL / REMS"],seed:7}
+// Research topics. Papers are pulled from `pubs` automatically when their title contains one of the `match` phrases.
+// imgs: [src, caption, (unused), "tall" for vertical photos, alt text]. Several images are stacked one under another.
+// extra: items that are not in the publications list: [year, title, venue, url, authors]
+const topics=[
+ {id:"disk",short:"Protoplanetary disk",
+  t:"Magnetic fields in the protoplanetary disk",
+  d:"Stars and planets form within disks of gas and dust, and magnetic fields may play a fundamental role in driving the evolution of these environments. This process occurs throughout the universe and shaped the formation of our own solar system billions of years ago. In the PMag Lab, we investigate ancient magnetic fields through the paleomagnetism of some of the oldest solids in the solar system, including calcium-aluminum-rich inclusions (CAIs) and chondrules preserved in meteorites, as well as samples recently returned from asteroid Bennu by NASA's OSIRIS-REx mission. By measuring the magnetization recorded in these materials, we reconstruct the strength, location, and longevity of magnetic fields in the protoplanetary disk. These records help us understand how our solar system formed and evolved, while also providing insight into the processes that govern the formation of planetary systems elsewhere in the universe.",
+  imgs:[["images/research/protoplanetary-disk.jpg","Credit: Hernán Cañellas.","center","","Illustration of the young solar system: the Sun surrounded by a disk of gas, dust and growing planetesimals, threaded by magnetic field lines."],
+        ["images/research/bennu-magnetic-carriers.jpg","Magnetite and pyrrhotite, magnetic carriers in a sample from asteroid Bennu, returned to Earth by NASA's OSIRIS-REx mission, seen in a scanning electron microscope image.","","","Scanning electron microscope image of a Bennu grain covered in clusters of small bright spherical particles, with a 10 micrometer scale bar."]],
+  match:["Bennu","calcium-aluminum-rich","outer solar system nebula","disk substructure"],extra:[]},
+ {id:"moon",short:"Lunar dynamo",
+  t:"The onset of the lunar dynamo",
+  d:"The Moon once generated its own global magnetic field, but this dynamo ceased sometime between approximately 1.9 and 0.8 billion years ago. Despite decades of study, most evidence for lunar magnetism comes from rocks that formed between 3.5 and 3.9 billion years ago, leaving the earliest history of the lunar dynamo, including when it began, poorly constrained. In the PMag Lab, we are investigating lunar zircon grains preserved within breccias returned to Earth by NASA's Apollo missions as potential recorders of this magnetic field. This work aims to reveal when the lunar dynamo started and what that tells us about the thermal evolution of the Moon.",
+  imgs:[["images/research/lunar-dynamo.jpg","Credit: Hernán Cañellas.","","","Illustration of the Moon cut open to show its hot core, surrounded by magnetic field lines from an ancient dynamo."],
+        ["images/research/lunar-zircons-qdm.jpg","Secondary electron (SE) images and quantum diamond microscope (QDM) maps of two lunar zircons from Apollo sample 14311, showing where their magnetic signal is located after an isothermal remanent magnetization (IRM).","80","","Four panels: electron microscope images of two zircon grains with trapped impact melt labeled, and matching magnetic field maps in red and blue with a scale of plus or minus 3 microtesla."]],
+  match:["lunar dynamo"],
+  extra:[[2025,"Using lunar zircon grains to elucidate the early lunar dynamo","Lunar and Planetary Science Conference","https://www.hou.usra.edu/meetings/lpsc2025/pdf/1929.pdf"],
+         [2024,"Determining the potential of lunar zircons as paleomagnetic targets","AGU Fall Meeting",""]]},
+ {id:"recent",short:"Recent field variations",
+  t:"Recent variations of Earth's magnetic field",
+  d:"Earth's magnetic field varies on timescales ranging from decades to millennia, including dramatic events such as geomagnetic excursions. However, most geological records are too coarse to capture these changes in detail. Speleothems, mineral deposits that grow inside caves, can incorporate magnetic particles as they form, preserving continuous magnetic records with resolutions approaching annual timescales. In the PMag Lab, we use a combination of magnetometers, including magnetic microscopy, to measure these records at sub-millimeter resolution. These high-resolution measurements allow us to reconstruct past variations in Earth's magnetic field with unprecedented detail, providing new insights into the mechanisms and timescales of geomagnetic change.",
+  imgs:[["images/research/speleothem-cave.jpg","Speleothem at the Peruaçu National Park, Brazil. Myself for scale.","center","tall"]],
+  match:["speleothems using magnetic microscopy","net magnetic moment"],extra:[]},
+ {id:"icy",short:"Icy moons",
+  t:"Icy moon magnetism",
+  d:"Icy moons such as Europa host oceans beneath the ice. Rocky material delivered by micrometeorites and transported through the ice shell by convection may acquire and retain magnetization, potentially producing detectable crustal magnetic signatures at the surface. Similarly, an ancient dynamo could have left remanent magnetization recorded deep within the moon, leaving a record that future spacecraft observations may be able to resolve. In the PMag Lab, we combine models of ice-shell convection with magnetic field simulations to predict these signatures and evaluate what their detection by NASA's Europa Clipper mission could reveal about a moon's interior structure. These observations could provide unique constraints on the rock-to-ice fraction of the shell, its rheological properties, and its thermal evolution.",
+  imgs:[["images/research/europa.jpg","Credit: NASA/JPL-Caltech/SwRI/MSSS.","","","Jupiter's moon Europa, its icy surface crossed by dark lines and ridges."],
+        ["images/research/icy-moon-convection.jpg","Simulated convection in an icy moon's ice shell with particles simulating micrometeorites, showing temperature and velocity.","","","Simulation of convection in a 25-km-thick ice shell, colored by temperature with velocity magnitude overlaid."]],
+  match:[],
+  extra:[[2026,"Using crustal magnetic signatures to investigate the internal dynamics of Europa","Lunar and Planetary Science Conference","https://www.hou.usra.edu/meetings/lpsc2026/pdf/1923.pdf","Biassey-Bogart, Borlina, Rudolph, Raymond"]]},
+ {id:"deep",short:"Deep-time geodynamo",
+  t:"Earth's magnetic field across geological time",
+  d:"When did Earth's dynamo begin, and how has it evolved through time? In our lab, we investigate magnetic records preserved in terrestrial materials spanning a wide range of scales, from single crystals (~100 µm in size) to paleomagnetic cores. These records allow us to reconstruct the long-term behavior of Earth's magnetic field and better understand the processes that generate and sustain it. A major focus of our work is the Ediacaran Period, when the geomagnetic field may have been unusually weak just prior to the emergence of complex animal life. More broadly, we aim to understand how changes in Earth's deep interior influenced the magnetic field and to explore the connections between dynamo evolution and planetary habitability.",
+  imgs:[["images/research/earth-dynamo.jpg","Credit: Hernán Cañellas.","center","","Illustration of Earth's dynamo: flow in the liquid outer core generates the magnetic field that surrounds the planet."]],
+  match:["Hadean","Jack Hills","Barberton","Archean zircon","oxygen escape"],extra:[]},
+ {id:"nmf",short:"Null magnetic fields",
+  t:"How the absence of magnetic fields shapes space exploration",
+  d:"Unlike Earth, the Moon lacks a global magnetic field. As NASA prepares for a sustained human presence on the lunar surface, understanding how the absence of a planetary magnetic field may affect living organisms has become increasingly important. In the PMag Lab, we collaborate with researchers across Purdue University to investigate how biological systems respond to magnetic-field-free environments under a range of conditions. Through laboratory experiments that simulate the lunar magnetic environment, we aim to understand the role magnetic fields play in biological processes.",
+  imgs:[["images/research/null-magnetic-field-plants.jpg","Magnetic field maps using the QDM of Arabidopsis seeds across several days of germination, in Earth's ambient field (top) and in a null magnetic field (bottom). Color scale ±2 µT.","","","Panels of germinating Arabidopsis seeds, with seeds in an ambient field in the top row and seeds in a null field in the bottom row, including sprouted and not sprouted examples."]],
+  match:[],
+  extra:[[2026,"Decoding magnetic-field and spaceflight stress signatures onto the dry/germinating Arabidopsis seed","Lunar Exploration Analysis Group (LEAG) Annual Meeting","","Barker, Dagar, Boland, Borlina, Escobar, O'Rourke, Massa, Wheeler, Demmig-Adams, Mortimer, Lewsey, Porterfield"],
+         [2026,"Geomagnetic field deprivation delays germination and limits hypocotyl elongation in Arabidopsis thaliana: implications for the Artemis IV LEAF payload","Lunar Exploration Analysis Group (LEAG) Annual Meeting","","Dagar, Sanchez, Bristol, Barker, Borlina, Porterfield"]]},
+ {id:"vr",short:"VR in the geosciences",
+  t:"Virtual reality in the geosciences",
+  d:"Caves provide incredible opportunities to explore geology and better understand the natural environments around us. Yet, because of physical barriers, travel costs, accessibility challenges, and unfamiliarity with these settings, relatively few students and members of the public have the opportunity to visit them. As part of a multidisciplinary collaboration at Purdue University, we have developed an immersive virtual reality cave experience that brings these environments into classrooms and public spaces. The experience was co-designed with a diverse group of stakeholders, including students, faculty, and members of the Indiana Department of Natural Resources (DNR). This work has been supported by Purdue University's Experiential Education program and a Purdue Community Engagement, Research and Impact (CERI) Grant. In partnership with the Indiana DNR, we also bring the experience to broader audiences through public outreach events, including the Indiana State Fair, helping make geoscience more accessible to the general public.",
+  imgs:[["images/research/vr-cave-render.jpg","A virtual cave environment built for the VR experience from LiDAR data from the Elaphes cave in France.","","","Rendered view inside a virtual limestone cave passage."],
+        ["images/research/vr-cave-classroom.jpg","Visitors trying the VR cave experience with the Indiana Department of Natural Resources at the Indiana State Fair.","","tall","A visitor wearing a VR headset while a student points to the cave view on a monitor at a Purdue Office of Engagement booth."]],
+  match:[],
+  extra:[[2025,"Developing and co-designing a cave virtual reality experience for students in geoscience courses","AGU Fall Meeting","https://agu.confex.com/agu/agu25/meetingapp.cgi/Paper/1953821","Kouvaras Ostrowski, Borlina, Samanta, Jariwala, Lee, Bramson, Ilie"]]}
 ];
+const topicOf=t=>topics.find(tp=>tp.match.some(m=>t.toLowerCase().includes(m.toLowerCase())));
 // [year, status, authors, title, journal, url]  status: pub | sub | prep
 const pubs=[
- [null,"prep","Borlina, Stanley, Hofstadter","The role of magnetic fields in the formation of giant planets","",""],
- [null,"prep","Borlina, et al.","Fold tests from the Southern Cross, Western Australia","",""],
- [null,"sub","Borlina, Weiss, Bai, Tung, Harrison, Mansbach, Chatterjee, Tissot, McKeegan","Paleomagnetic evidence for a nebular magnetic field at the beginning of the solar system","",""],
- [null,"sub","Hamilton, McEwen, …, Borlina, …, Spencer","Comparing NASA Discovery and New Frontiers class mission concepts for the Io Volcano Observer (IVO)","",""],
+ [null,"prep","Borlina, Bristol, Doctor, Feinberg","Evidence of a solar nebula magnetic field in samples returned from Bennu","",""],
+ [null,"prep","Angappan, Borlina, Stanley, Hofstadter","The role of magnetic fields in the formation of giant planets","",""],
+ [2026,"pub","Borlina, Weiss, Bai, Tung, Harrison, Mansbach, Lima, Chatterjee, Tissot, McKeegan","Paleomagnetic evidence for a nebular magnetic field from calcium-aluminum-rich inclusions","PNAS","https://www.pnas.org/doi/10.1073/pnas.2521660123"],
+ [2026,"pub","Alonso Tagle, Maggiolo, Gunell, Borlina, …, Van Doorsselaere","Evolution of atmospheric oxygen escape from Earth during the last 2450 Myr","JGR Space Physics",""],
+ [2025,"pub","Hamilton, McEwen, …, Borlina, …, Spencer","Comparing NASA Discovery and New Frontiers class mission concepts for the Io Volcano Observer (IVO)","The Planetary Science Journal","https://iopscience.iop.org/article/10.3847/PSJ/adcab0"],
  [2024,"pub","Borlina, Lima, Feinberg, Jaqueto, Lascu, Trindade, Font, Sánchez-Moreno, Dimuccio, Yokoyama, Parés, Weiss, Dorale","Obtaining high-resolution magnetic records from speleothems using magnetic microscopy","Geochemistry, Geophysics, Geosystems","https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2024GC011594"],
  [2024,"pub","Fu, Drabon, Weiss, Borlina, Kirkpatrick","Statistical reanalysis of Archean zircon paleointensities: No evidence for stagnant-lid tectonics","Earth and Planetary Science Letters","https://www.sciencedirect.com/science/article/pii/S0012821X24001122"],
- [2023,"pub","Mansbach, Weiss, Schnepf, Lima, Borlina, Chatterjee, Gattacceca, Uehara, Wang","Magnetism of the Acapulco primitive achondrite and implications for the evolution of partially differentiated bodies","JGR Planets","https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2023JE008076"],
+ [2023,"pub","Mansbach, Weiss, Schnepf, Lima, Borlina, Chatterjee, Gattacceca, Uehara, Wang","Magnetism of the Acapulco primitive achondrite and implications for the evolution of partially differentiated bodies","JGR: Planets","https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2023JE008076"],
  [2023,"pub","Lima, Weiss, Borlina, Baratchart, Hardin","Estimating the net magnetic moment of geological samples from planar field maps using multipoles","Geochemistry, Geophysics, Geosystems","https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2022GC010724"],
  [2023,"pub","Taylor, Reddy, Saxey, Rickard, Tang, Borlina, Fu, Weiss, Bagot, Williams, Harrison","Direct age constraints on the magnetism of Jack Hills zircon","Science Advances","https://www.science.org/doi/10.1126/sciadv.add1511"],
- [2022,"pub","Borlina, Weiss, Bryson, Armitage","Lifetime of the outer solar system nebula from carbonaceous chondrites","JGR Planets","https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/2021JE007139"],
+ [2022,"pub","Borlina, Weiss, Bryson, Armitage","Lifetime of the outer solar system nebula from carbonaceous chondrites","JGR: Planets","https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/2021JE007139"],
  [2021,"pub","Borlina, Weiss, Bryson, Bai, Lima, Chatterjee, Mansbach","Paleomagnetic evidence for a disk substructure in the early solar system","Science Advances","https://www.science.org/doi/10.1126/sciadv.abj6928"],
- [2021,"pub","Fu, Drabon, Wiedenbeck, Brenner, Lowe, Borlina","Paleomagnetism of 3.5–4.0 Ga zircons from the Barberton Greenstone Belt, South Africa","Earth and Planetary Science Letters","https://www.sciencedirect.com/science/article/pii/S0012821X21002582"],
+ [2020,"pub","Fu, Drabon, Wiedenbeck, Brenner, Lowe, Borlina","Paleomagnetism of 3.5–4.0 Ga zircons from the Barberton Greenstone Belt, South Africa","Earth and Planetary Science Letters","https://www.sciencedirect.com/science/article/pii/S0012821X21002582"],
  [2020,"pub","Shang, Daye, Sivan, Borlina, Tamura, Weiss, Bosak","Formation of zero-valent iron in iron-reducing cultures of Methanosarcina barkeri","Environmental Science & Technology","https://pubs.acs.org/doi/abs/10.1021/acs.est.0c01595"],
- [2020,"pub","Borlina, Weiss, Lima, …, Maloof","Re-evaluating the evidence for a Hadean-Eoarchean dynamo","Science Advances","https://advances.sciencemag.org/content/6/15/eaav9634.abstract"],
+ [2020,"pub","Borlina, Weiss, Lima, Tang, Taylor, Einsle, Harrison, Fu, Bell, Alexander, Kirkpatrick, Wielicki, Harrison, Ramezani, Maloof","Re-evaluating the evidence for a Hadean-Eoarchean dynamo","Science Advances","https://advances.sciencemag.org/content/6/15/eaav9634.abstract"],
  [2020,"pub","Mighani, Wang, Shuster, Borlina, Nichols, Weiss","The end of the lunar dynamo","Science Advances","https://advances.sciencemag.org/content/6/1/eaax0883"],
- [2019,"pub","Tang, Taylor, Einsle, Borlina, …, Harrison","Secondary magnetite in ancient zircon precludes analysis of a Hadean geodynamo","PNAS","https://www.pnas.org/content/116/2/407"],
+ [2019,"pub","Tang, Taylor, Einsle, Borlina, Fu, Weiss, Williams, Williams, Nagy, Midgley, Lima, Bell, Harrison, Alexander, Harrison","Secondary magnetite in ancient zircon precludes analysis of a Hadean geodynamo","PNAS","https://www.pnas.org/content/116/2/407"],
  [2018,"pub","Pajusalu, Borlina, Seager, Ono, Bosak","Open-source sensor for measuring oxygen partial pressures below 100 microbars","PLOS ONE","https://journals.plos.org/plosone/article?id=10.1371%2Fjournal.pone.0206678"],
- [2018,"pub","Weiss, Fu, Einsle, …, Borlina, …, Walsworth","Secondary magnetic inclusions in detrital zircons from the Jack Hills, Western Australia, and implications for the origin of the geodynamo","Geology","https://pubs.geoscienceworld.org/gsa/geology/article/46/5/427/529025/Secondary-magnetic-inclusions-in-detrital-zircons"],
+ [2018,"pub","Weiss, Fu, Einsle, Glenn, Kehayias, Bell, Gelb, Araujo, Lima, Borlina, Boehnke, Johnstone, Harrison, Harrison, Walsworth","Secondary magnetic inclusions in detrital zircons from the Jack Hills, Western Australia, and implications for the origin of the geodynamo","Geology","https://pubs.geoscienceworld.org/gsa/geology/article/46/5/427/529025/Secondary-magnetic-inclusions-in-detrital-zircons"],
  [2017,"pub","Borlina & Renno","The impact of a severe drought on dust lifting in California's Owens Lake area","Scientific Reports","https://www.nature.com/articles/s41598-017-01829-7"],
- [2015,"pub","Harrison, Barth, …, Borlina, …, Zimmerman","Applications of electrified dust and dust devil electrodynamics to Martian atmospheric electricity","Space Science Reviews","https://link.springer.com/article/10.1007/s11214-016-0241-8"],
- [2015,"pub","Martínez, Fischer, Rennó, Sebastián, Kemppinen, Bridges, Borlina, …, Gómez-Elvira","Likely frost events at Gale Crater: analysis from MSL/REMS measurements","Icarus","https://www.sciencedirect.com/science/article/pii/S0019103515005540"],
- [2015,"pub","Borlina, Ehlmann, Kite","Modeling the thermal and physical evolution of Mount Sharp's sedimentary rocks, Gale Crater, Mars: implications for diagenetic minerals on the MSL Curiosity Rover traverse","JGR Planets","https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2015JE004799"],
- [2014,"pub","Martínez, Renno, Fischer, Borlina, …, Haberle","Surface energy budget and thermal inertia at Gale Crater: calculations from ground-based measurements","JGR Planets","https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1002/2014JE004618"]
+ [2016,"pub","Harrison, Barth, Esposito, Merrison, Montmessin, Aplin, Borlina, Berthelier, Déprez, Farrell, Houghton, Renno, Nicoll, Tripathi, Zimmerman","Applications of electrified dust and dust devil electrodynamics to Martian atmospheric electricity","Space Science Reviews","https://link.springer.com/article/10.1007/s11214-016-0241-8"],
+ [2016,"pub","Martínez, Fischer, Rennó, Sebastián, Kemppinen, Bridges, Borlina, Meslin, Genzer, Harri, Vicente-Retortillo, Ramos, de la Torre Juárez, Gómez, Gómez-Elvira, REMS team","Likely frost events at Gale Crater: analysis from MSL/REMS measurements","Icarus","https://www.sciencedirect.com/science/article/pii/S0019103515005540"],
+ [2015,"pub","Borlina, Ehlmann, Kite","Modeling the thermal and physical evolution of Mount Sharp's sedimentary rocks, Gale Crater, Mars: implications for diagenetic minerals on the MSL Curiosity Rover traverse","JGR: Planets","https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2015JE004799"],
+ [2014,"pub","Martínez, Renno, Fischer, Borlina, Hallet, de la Torre Juárez, Vasavada, Ramos, Hamilton, Gómez-Elvira, Haberle","Surface energy budget and thermal inertia at Gale Crater: calculations from ground-based measurements","JGR: Planets","https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1002/2014JE004618"]
 ];
 const press=[
+ [2026,"The John Batchelor Show","Podcast: Early solar system magnetism shaped planets","https://podcasts.apple.com/cy/podcast/4-early-solar-system-magnetism-shaped-planets-caue/id589864479?i=1000790422888"],
+ [2026,"Space.com","How did the infant sun form? Scientists get surprising new insights from 4.6-billion-year-old space dust","https://www.space.com/astronomy/solar-system/how-did-the-infant-sun-form-scientists-get-surprising-new-insights-from-4-6-billion-year-old-space-dust"],
+ [2026,"Purdue EAPS","Oldest magnetic evidence sheds light on how the solar system formed","https://www.eaps.purdue.edu/news/articles/2026/0824_magneticevidence_borlina.html"],
  [2025,"Purdue EAPS","Purdue-led team earns NASA grant to uncover the Moon's magnetic past","https://www.eaps.purdue.edu/news/articles/2025/0904_nasagrant_borlina.html"],
  [2025,"Star City TV","Northern lights make rare appearance in Greater Lafayette","https://www.starcitytv.com/news/local/northern-lights-make-rare-appearance-in-greater-lafayette-due-to-sun-positioning/article_ddd4b3ab-5f52-44af-bf12-f3bf8af2b163.html"],
  [2023,"CNN","Ancient bricks baked when Nebuchadnezzar II was king absorbed a power surge in Earth's magnetic field","https://www.cnn.com/2023/12/27/world/ancient-bricks-magnetic-field-anomaly-scn"],
@@ -368,39 +420,47 @@ const press=[
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
-function initials(n){return n.split(/\s+/).filter(w=>/^[A-Z]/.test(w)).map(w=>w[0]).slice(0,2).join("")}
+function initials(n){const w=n.split(/\s+/).filter(x=>/^[A-Z]/.test(x));return (w[0][0]+(w.length>1?w[w.length-1][0]:"")).toUpperCase()}
 function hue(n){let h=0;for(const c of n)h=(h*31+c.charCodeAt(0))%1000;return h/1000}
 
+const photos={"Cauê Borlina":"images/people/caue.jpg","Sedinam Biassey-Bogart":"images/people/sedi.jpg","Roshini Saravanan":"images/people/roshini.jpg","Emma Kostecki":"images/people/emma.jpg","Brianna Petruccelli":"images/people/brianna.jpg","Hiya Samanta":"images/people/hiya.jpg"};
 function renderPeople(el,list){
   el.innerHTML=list.map(([n,r,d,l=[]])=>{
     const t=hue(n);
     const bg=`color-mix(in srgb, ${t<.5?"var(--neg)":"var(--pos)"} ${12+Math.round(t*18)}%, var(--surface))`;
-    return `<div class="person"><div class="avatar" style="background:${bg}" aria-hidden="true">${initials(n)}</div>
-      <div><h3>${esc(n)}</h3><span class="label">${esc(r)}</span><p>${esc(d)}</p>
+    return `<div class="person"><div class="avatar" style="background:${bg}" aria-hidden="true">${photos[n]?`<img src="${photos[n]}" alt="" loading="lazy">`:initials(n)}</div>
+      <div><h3>${esc(n)}</h3><span class="label">${esc(r)}</span>${d?`<p>${esc(d)}</p>`:""}
       ${l.length?`<div style="display:flex;gap:12px;margin-top:6px">${l.map(([a,u])=>`<a href="${u}" target="_blank" rel="noopener">${a} ↗</a>`).join("")}</div>`:""}</div></div>`;
   }).join("");
 }
 renderPeople($("#team"),team);
-renderPeople($("#alumni"),alumni);
+$("#alumni").innerHTML=alumni.map(([n,r,now,u])=>`<li><span class="n">${u?`<a href="${u}" target="_blank" rel="noopener">${esc(n)}</a>`:esc(n)}</span><span class="r">${esc(r)}</span>${now?`<span class="now">now at ${esc(now)}</span>`:""}</li>`).join("");
 
-$("#projects").innerHTML=projects.map((p,i)=>`<article class="proj${p.cur?" current":""}">
-  <canvas data-seed="${p.seed}" aria-hidden="true"></canvas>
-  <h3>${esc(p.t)}</h3><p>${esc(p.d)}</p>
-  <div class="tags">${p.cur?'<span class="tag now">Current</span>':""}${p.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join("")}</div></article>`).join("");
+$("#topics").innerHTML=topics.map((tp,ti)=>{
+  const papers=pubs.filter(p=>topicOf(p[3])===tp&&p[1]!=="prep").map(([y,s,a,t,j,u])=>[y,t,j,u,s]);
+  const items=[...papers,...tp.extra.map(([y,t,j,u])=>[y,t,j,u,"x"])].sort((a,b)=>(b[0]??9999)-(a[0]??9999));
+  const fig=tp.imgs.length?tp.imgs.map(m=>`<div class="shot"${/^\d+$/.test(m[2]||"")?` style="max-width:${m[2]}%"`:""}><div class="main${m[3]==="tall"?" tall":""}"><img src="${m[0]}" alt="${esc(m[4]||m[1])}" loading="lazy"></div>
+      <figcaption>${esc(m[1])}</figcaption></div>`).join("")
+    :`<div class="main ph"><canvas data-seed="${ti+3}" aria-hidden="true"></canvas><span>Image coming soon</span></div>`;
+  const li=items.map(([y,t,j,u,s])=>`<li><span class="y">${y??"—"}</span><div>${u?`<a href="${u}" target="_blank" rel="noopener">${esc(t)} ↗</a>`:`<span>${esc(t)}</span>`}${s==="prep"?'<span class="st">In prep</span>':""}${j?`<span class="j">${esc(j)}</span>`:""}</div></li>`).join("");
+  return `<article class="topic" id="topic-${tp.id}"><figure class="fig" data-t="${ti}">${fig}</figure>
+    <div><h3>${esc(tp.t)}</h3><p class="desc">${esc(tp.d)}</p>
+    ${items.length?`<div class="tpubs-h">Publications &amp; conferences</div><ul class="tpubs">${li}</ul>`:""}</div></article>`;
+}).join("");
+
 
 $("#presslist").innerHTML=press.map(([y,o,h,u])=>`<li><a href="${u}" target="_blank" rel="noopener"><span class="yr">${y}</span><span class="o">${esc(o)}</span><span class="h">${esc(h)}</span><span class="arr">↗</span></a></li>`).join("");
 
 /* publications */
 let mode="all";
 function renderPubs(){
-  const q=$("#q").value.trim().toLowerCase();
+  const q="";
   const rows=pubs.filter(p=>{
     if(mode==="first"&&!p[2].startsWith("Borlina"))return false;
     if(mode==="pipe"&&p[1]==="pub")return false;
     if(q&&!(p.slice(2,5).join(" ").toLowerCase().includes(q)))return false;
     return true;
   });
-  $("#count").textContent=`${rows.length} of ${pubs.length}`;
   $("#pubs").innerHTML=rows.length?rows.map(([y,s,a,t,j,u])=>{
     const au=esc(a).replace(/Borlina/,"<b>Borlina</b>");
     const tag=s==="sub"?'<span class="status sub">Submitted</span>':s==="prep"?'<span class="status prep">In prep</span>':"";
@@ -408,10 +468,6 @@ function renderPubs(){
     return `<li class="pub"><span class="yr">${y??"—"}</span><div><div class="t">${title}${tag}</div><div class="au">${au}${j?` · <span class="j">${esc(j)}</span>`:""}</div></div></li>`;
   }).join(""):`<li class="empty">No papers match “${esc(q)}”. Try a journal name or co‑author.</li>`;
 }
-[["f-all","all"],["f-first","first"],["f-pipe","pipe"]].forEach(([id,m])=>{
-  $("#"+id).addEventListener("click",()=>{mode=m;document.querySelectorAll(".seg button").forEach(b=>b.setAttribute("aria-pressed",b.id===id));renderPubs()});
-});
-$("#q").addEventListener("input",renderPubs);
 renderPubs();
 
 /* ---------- magnetic field maps ---------- */
@@ -435,7 +491,7 @@ function paint(cv,dips,scale,alpha=1){
 }
 function makeDips(seed,n){const r=rng(seed);return Array.from({length:n},()=>({x:r(),y:r(),h:.06+r()*.08,mx:r()-.5,my:r()-.5,mz:(r()-.5)*2}))}
 
-function drawThumbs(){document.querySelectorAll(".proj canvas").forEach(cv=>{
+function drawThumbs(){document.querySelectorAll(".fig .ph canvas").forEach(cv=>{
   const r=cv.getBoundingClientRect();cv.width=Math.max(40,Math.round(r.width/4));cv.height=Math.max(20,Math.round(r.height/4));
   paint(cv,makeDips(+cv.dataset.seed*7,2+(+cv.dataset.seed%3)),.0011);
 })}
