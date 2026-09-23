@@ -423,7 +423,7 @@ const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim
 function initials(n){const w=n.split(/\s+/).filter(x=>/^[A-Z]/.test(x));return (w[0][0]+(w.length>1?w[w.length-1][0]:"")).toUpperCase()}
 function hue(n){let h=0;for(const c of n)h=(h*31+c.charCodeAt(0))%1000;return h/1000}
 
-const photos={"Cauê Borlina":"images/people/caue.jpg","Sedinam Biassey-Bogart":"images/people/sedi.jpg","Roshini Saravanan":"images/people/roshini.jpg","Emma Kostecki":"images/people/emma.jpg","Brianna Petruccelli":"images/people/brianna.jpg","Hiya Samanta":"images/people/hiya.jpg"};
+const photos={"Cauê Borlina":"images/people/caue.jpg","Sedinam Biassey-Bogart":"images/people/sedi.jpg","Melissa de Andrade Nunes":"images/people/melissa.jpg","Roshini Saravanan":"images/people/roshini.jpg","Emma Kostecki":"images/people/emma.jpg","Brianna Petruccelli":"images/people/brianna.jpg","Hiya Samanta":"images/people/hiya.jpg"};
 function renderPeople(el,list){
   el.innerHTML=list.map(([n,r,d,l=[]])=>{
     const t=hue(n);
