@@ -376,10 +376,14 @@ const topics=[
 const topicOf=t=>topics.find(tp=>tp.match.some(m=>t.toLowerCase().includes(m.toLowerCase())));
 // [year, status, authors, title, journal, url]  status: pub | sub | prep
 const pubs=[
- [null,"prep","Borlina, Bristol, Doctor, Feinberg","Evidence of a solar nebula magnetic field in samples returned from Bennu","",""],
+ [null,"prep","Borlina, Thompson, Crow, Tikoo, Jung, Mansbach, Fu, Prissel, Prissel, Asimow, Hu","Characterizing the rock magnetic properties of lunar zircons","",""],
+ [null,"prep","Biassey-Bogart, Borlina, Rudolph, Raymond","Determining the effects of magnetic pollution in Europa's ice shell on magnetic field measurements","",""],
+ [null,"prep","Kostecki, Borlina, Feinberg, Senan, Sekhon, Ibarra, Timbal, Yambing, Jost, McGee, Meduri, Biggin, Mason, Davies","Understanding the local behavior of the Laschamp excursion through a stalagmite from the Philippines","",""],
+ [null,"prep","de Andrade Nunes, Petruccelli, Trindade, Borlina, Silva, Uieda, Neto, Yamaguti","The role of lightning magnetization on the Martian crust","",""],
  [null,"prep","Angappan, Borlina, Stanley, Hofstadter","The role of magnetic fields in the formation of giant planets","",""],
+ [null,"sub","Borlina, Bristol, Doctor, Feinberg","Bennu's returned samples recorded a solar nebula magnetic field","",""],
  [2026,"pub","Borlina, Weiss, Bai, Tung, Harrison, Mansbach, Lima, Chatterjee, Tissot, McKeegan","Paleomagnetic evidence for a nebular magnetic field from calcium-aluminum-rich inclusions","PNAS","https://www.pnas.org/doi/10.1073/pnas.2521660123"],
- [2026,"pub","Alonso Tagle, Maggiolo, Gunell, Borlina, …, Van Doorsselaere","Evolution of atmospheric oxygen escape from Earth during the last 2450 Myr","JGR Space Physics",""],
+ [2026,"pub","Alonso Tagle, Maggiolo, Gunell, Borlina, …, Van Doorsselaere","Evolution of atmospheric oxygen escape from Earth during the last 2450 Myr","JGR: Space Physics",""],
  [2025,"pub","Hamilton, McEwen, …, Borlina, …, Spencer","Comparing NASA Discovery and New Frontiers class mission concepts for the Io Volcano Observer (IVO)","The Planetary Science Journal","https://iopscience.iop.org/article/10.3847/PSJ/adcab0"],
  [2024,"pub","Borlina, Lima, Feinberg, Jaqueto, Lascu, Trindade, Font, Sánchez-Moreno, Dimuccio, Yokoyama, Parés, Weiss, Dorale","Obtaining high-resolution magnetic records from speleothems using magnetic microscopy","Geochemistry, Geophysics, Geosystems","https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2024GC011594"],
  [2024,"pub","Fu, Drabon, Weiss, Borlina, Kirkpatrick","Statistical reanalysis of Archean zircon paleointensities: No evidence for stagnant-lid tectonics","Earth and Planetary Science Letters","https://www.sciencedirect.com/science/article/pii/S0012821X24001122"],
@@ -437,7 +441,7 @@ renderPeople($("#team"),team);
 $("#alumni").innerHTML=alumni.map(([n,r,now,u])=>`<li><span class="n">${u?`<a href="${u}" target="_blank" rel="noopener">${esc(n)}</a>`:esc(n)}</span><span class="r">${esc(r)}</span>${now?`<span class="now">now at ${esc(now)}</span>`:""}</li>`).join("");
 
 $("#topics").innerHTML=topics.map((tp,ti)=>{
-  const papers=pubs.filter(p=>topicOf(p[3])===tp&&p[1]!=="prep").map(([y,s,a,t,j,u])=>[y,t,j,u,s]);
+  const papers=pubs.filter(p=>topicOf(p[3])===tp&&p[1]==="pub").map(([y,s,a,t,j,u])=>[y,t,j,u,s]);
   const items=[...papers,...tp.extra.map(([y,t,j,u])=>[y,t,j,u,"x"])].sort((a,b)=>(b[0]??9999)-(a[0]??9999));
   const fig=tp.imgs.length?tp.imgs.map(m=>`<div class="shot"${/^\d+$/.test(m[2]||"")?` style="max-width:${m[2]}%"`:""}><div class="main${m[3]==="tall"?" tall":""}"><img src="${m[0]}" alt="${esc(m[4]||m[1])}" loading="lazy"></div>
       <figcaption>${esc(m[1])}</figcaption></div>`).join("")
