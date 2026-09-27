@@ -161,6 +161,8 @@ section.block{padding-block:clamp(56px,8vw,96px);border-bottom:1px solid var(--r
 .pub .t a:hover{text-decoration:underline;text-decoration-color:var(--neg);text-underline-offset:3px}
 .pub .au{font-size:17px;color:var(--muted);margin-top:4px}
 .pub .au b{color:var(--ink);font-weight:600}
+.pub .au sup.lab,.pubkey sup{color:var(--pos);font-weight:700;font-size:.8em;margin-left:1px;cursor:help}
+.pubkey{font-size:15px;color:var(--muted);margin-top:6px}
 .pub .j{font-style:italic;font-size:17px}
 .status{font:500 12px/1 var(--mono);text-transform:uppercase;letter-spacing:.06em;padding:4px 6px;margin-left:8px;vertical-align:2px}
 .status.sub{background:var(--neg-soft);color:var(--neg)}
@@ -274,6 +276,7 @@ footer .mail{font:500 16px/1 var(--mono);color:var(--ink);user-select:all}
       <div>
         <h2>Papers</h2>
         <p>Full and current list on <a href="https://scholar.google.com/citations?user=F0EQqV0AAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>.</p>
+        <p class="pubkey"><sup>†</sup> Member of the PMag Lab</p>
       </div>
     </div>
     <ol class="pubs" id="pubs"></ol>
@@ -456,6 +459,7 @@ $("#topics").innerHTML=topics.map((tp,ti)=>{
 $("#presslist").innerHTML=press.map(([y,o,h,u])=>`<li><a href="${u}" target="_blank" rel="noopener"><span class="yr">${y}</span><span class="o">${esc(o)}</span><span class="h">${esc(h)}</span><span class="arr">↗</span></a></li>`).join("");
 
 /* publications */
+const labNames=new Set([...team,...alumni].map(([n])=>n.split(" ").slice(1).join(" ")).filter(n=>n!=="Borlina"));
 let mode="all";
 function renderPubs(){
   const q="";
@@ -466,7 +470,7 @@ function renderPubs(){
     return true;
   });
   $("#pubs").innerHTML=rows.length?rows.map(([y,s,a,t,j,u])=>{
-    const au=esc(a).replace(/Borlina/,"<b>Borlina</b>");
+    const au=a.split(", ").map(n=>labNames.has(n)?`${esc(n)}<sup class="lab" title="Member of the PMag Lab">†</sup>`:esc(n)).join(", ").replace(/Borlina/,"<b>Borlina</b>");
     const tag=s==="sub"?'<span class="status sub">Submitted</span>':s==="prep"?'<span class="status prep">In prep</span>':"";
     const title=u?`<a href="${u}" target="_blank" rel="noopener">${esc(t)}</a>`:esc(t);
     return `<li class="pub"><span class="yr">${y??"—"}</span><div><div class="t">${title}${tag}</div><div class="au">${au}${j?` · <span class="j">${esc(j)}</span>`:""}</div></div></li>`;
