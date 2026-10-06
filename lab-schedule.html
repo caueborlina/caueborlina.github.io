@@ -58,7 +58,7 @@ td button.mine.past:hover{background:var(--mine)}
 <div class="wrap">
   <div class="label">Purdue Magnetics Laboratory</div>
   <h1>Instrument schedule</h1>
-  <p>Type your name, pick an instrument, then click the hours you'll be using it. Click one of your own hours again to free it.</p>
+  <p>Type your name, pick an instrument, then click every hour you'll be using it, as many as you need. Click one of your own hours again to free it.</p>
   <div class="banner" id="banner" hidden>Demo mode: this page isn't connected to the shared schedule yet, so bookings disappear when you reload.</div>
 
   <div class="bar">
@@ -97,7 +97,7 @@ const addDays=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
 const hourLabel=h=>`${((h+11)%12)+1} ${h<12?"am":"pm"}`;
 const key=(i,d,h)=>`${i}|${d}|${h}`;
 
-let inst=instruments[0], week=monday(new Date()), bookings=new Map(), busy=false;
+let inst=instruments[0], week=monday(new Date()), bookings=new Map();
 const demo=!API_URL.trim();
 $("#banner").hidden=!demo;
 
@@ -114,29 +114,37 @@ async function load(){
   if(demo){render();return}
   try{
     const r=await fetch(`${API_URL}?from=${iso(week)}&to=${iso(addDays(week,6))}`);
-    const j=await r.json(); setBookings(j.bookings||[]); render();
+    const j=await r.json(); if(pending===0){setBookings(j.bookings||[]); render()}
   }catch(e){say("Couldn't load the schedule. Check your connection and reload.")}
 }
 
-async function send(action,d,h){
-  if(demo){
-    const k=key(inst,d,h);
-    if(action==="book")bookings.set(k,me()); else bookings.delete(k);
-    render(); return;
-  }
-  busy=true;
-  try{
-    const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},
-      body:JSON.stringify({action,inst,date:d,hour:h,name:me(),from:iso(week),to:iso(addDays(week,6))})});
-    const j=await r.json();
-    if(j.bookings)setBookings(j.bookings);
-    if(!j.ok)say(j.error==="taken"?`That hour was just booked by ${j.by||"someone else"}.`:"That didn't save. Please try again.");
-  }catch(e){say("That didn't save. Check your connection and try again.");await load()}
-  busy=false; render();
+// Saves run one after another in the background, so you can keep clicking.
+let queue=Promise.resolve(), pending=0;
+function send(action,d,h){
+  const k=key(inst,d,h);
+  if(demo){render();return}
+  const body=JSON.stringify({action,inst,date:d,hour:h,name:me(),from:iso(week),to:iso(addDays(week,6))});
+  pending++;
+  queue=queue.then(async()=>{
+    try{
+      const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body});
+      const j=await r.json();
+      pending--;
+      if(!j.ok){
+        if(j.error==="taken"){bookings.set(k,j.by||"Booked");say(`That hour was just booked by ${j.by||"someone else"}.`)}
+        else say("That didn't save. Please try again.");
+      }
+      if(pending===0&&j.bookings)setBookings(j.bookings);
+    }catch(e){
+      pending--;
+      say("Some hours didn't save. Check your connection.");
+      if(pending===0)await load();
+    }
+    render();
+  });
 }
 
 function clickSlot(d,h){
-  if(busy)return;
   const k=key(inst,d,h), who=bookings.get(k);
   if(who&&!same(who,me())){say(`${inst} is booked by ${who} at ${hourLabel(h)}.`);return}
   if(!me()){say("Type your name first.");nameEl.focus();return}
@@ -172,7 +180,7 @@ $("#prev").onclick=()=>{week=addDays(week,-7);say("");render();load()};
 $("#next").onclick=()=>{week=addDays(week,7);say("");render();load()};
 $("#now").onclick=()=>{week=monday(new Date());say("");render();load()};
 render(); load();
-if(!demo)setInterval(()=>{if(!busy&&!document.hidden)load()},30000);
+if(!demo)setInterval(()=>{if(pending===0&&!document.hidden)load()},30000);
 </script>
 </body>
 </html>
