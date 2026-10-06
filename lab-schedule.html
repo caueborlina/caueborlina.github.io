@@ -33,6 +33,8 @@ p{margin:0 0 12px;max-width:68ch;color:var(--muted)}
 .week button{background:transparent;border:1px solid var(--rule);padding:10px 13px;cursor:pointer}
 .week button:hover{border-color:var(--ink)}
 #range{font-weight:600;min-width:13ch;text-align:center}
+#saving{min-height:1.4em;margin:0 0 8px;font-size:15px;color:var(--muted)}
+table{user-select:none;-webkit-user-select:none}
 #status{min-height:1.5em;margin:0 0 10px;color:var(--pos);font-weight:500}
 .scroll{overflow-x:auto;border:1px solid var(--rule)}
 table{border-collapse:collapse;width:100%;min-width:720px;table-layout:fixed}
@@ -58,7 +60,7 @@ td button.mine.past:hover{background:var(--mine)}
 <div class="wrap">
   <div class="label">Purdue Magnetics Laboratory</div>
   <h1>Instrument schedule</h1>
-  <p>Type your name, pick an instrument, then click every hour you'll be using it, as many as you need. Click one of your own hours again to free it.</p>
+  <p>Type your name, pick an instrument, then click an hour or drag across several hours to book them. Click or drag over your own hours to free them.</p>
   <div class="banner" id="banner" hidden>Demo mode: this page isn't connected to the shared schedule yet, so bookings disappear when you reload.</div>
 
   <div class="bar">
@@ -72,6 +74,7 @@ td button.mine.past:hover{background:var(--mine)}
     </div>
   </div>
   <div id="status" role="status" aria-live="polite"></div>
+  <div id="saving" aria-live="polite"></div>
   <div class="scroll"><table id="grid"></table></div>
   <div class="key">
     <span><i></i>Free</span>
@@ -119,12 +122,12 @@ async function load(){
 }
 
 // Saves run one after another in the background, so you can keep clicking.
-let queue=Promise.resolve(), pending=0;
+let queue=Promise.resolve(), pending=0, savedOnce=false;
 function send(action,d,h){
   const k=key(inst,d,h);
   if(demo){render();return}
   const body=JSON.stringify({action,inst,date:d,hour:h,name:me(),from:iso(week),to:iso(addDays(week,6))});
-  pending++;
+  pending++; savedOnce=true; render();
   queue=queue.then(async()=>{
     try{
       const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body});
@@ -144,16 +147,25 @@ function send(action,d,h){
   });
 }
 
-function clickSlot(d,h){
+// mode "book" only fills free hours; mode "cancel" only frees your own hours.
+function applySlot(d,h,mode){
   const k=key(inst,d,h), who=bookings.get(k);
-  if(who&&!same(who,me())){say(`${inst} is booked by ${who} at ${hourLabel(h)}.`);return}
-  if(!me()){say("Type your name first.");nameEl.focus();return}
+  if(mode==="book"&&!who){bookings.set(k,me());render();send("book",d,h)}
+  else if(mode==="cancel"&&who&&same(who,me())){bookings.delete(k);render();send("cancel",d,h)}
+}
+// Returns the mode this press starts ("book" or "cancel"), or null if nothing can be done.
+function startSlot(d,h){
+  const who=bookings.get(key(inst,d,h));
+  if(who&&!same(who,me())){say(`${inst} is booked by ${who} at ${hourLabel(h)}.`);return null}
+  if(!me()){say("Type your name first.");nameEl.focus();return null}
   say("");
-  if(who){bookings.delete(k);render();send("cancel",d,h)}
-  else{bookings.set(k,me());render();send("book",d,h)}
+  const mode=who?"cancel":"book";
+  applySlot(d,h,mode);
+  return mode;
 }
 
 function render(){
+  $("#saving").textContent=demo?"":pending>0?`Saving ${pending} change${pending>1?"s":""}… keep this page open.`:(savedOnce?"All changes saved.":"");
   $("#inst").innerHTML=instruments.map(n=>`<button type="button" data-i="${esc(n)}" aria-pressed="${n===inst}">${esc(n)}</button>`).join("");
   const days=[...Array(7)].map((_,i)=>addDays(week,i)), today=iso(new Date()), now=new Date();
   const fmt=d=>d.toLocaleDateString("en-US",{month:"short",day:"numeric"});
@@ -175,7 +187,23 @@ function render(){
 }
 
 $("#inst").addEventListener("click",e=>{const b=e.target.closest("button");if(b){inst=b.dataset.i;say("");render()}});
-$("#grid").addEventListener("click",e=>{const b=e.target.closest("td button");if(b&&!b.disabled)clickSlot(b.dataset.d,+b.dataset.h)});
+/* press and drag across hours with the mouse; tap or press Enter for a single hour */
+let drag=null;
+const slotOf=e=>{const b=e.target.closest&&e.target.closest("td button");return b&&!b.disabled?b:null};
+$("#grid").addEventListener("mousedown",e=>{
+  if(e.button!==0)return;
+  const b=slotOf(e); if(!b)return;
+  e.preventDefault();
+  drag=startSlot(b.dataset.d,+b.dataset.h);
+});
+$("#grid").addEventListener("mouseover",e=>{
+  if(!drag)return;
+  if(!(e.buttons&1)){drag=null;return}
+  const b=slotOf(e); if(b)applySlot(b.dataset.d,+b.dataset.h,drag);
+});
+addEventListener("mouseup",()=>{drag=null});
+// keyboard (Enter/Space) arrives as a click with detail 0; mouse and touch were handled on mousedown
+$("#grid").addEventListener("click",e=>{if(e.detail!==0)return;const b=slotOf(e);if(b)startSlot(b.dataset.d,+b.dataset.h)});
 $("#prev").onclick=()=>{week=addDays(week,-7);say("");render();load()};
 $("#next").onclick=()=>{week=addDays(week,7);say("");render();load()};
 $("#now").onclick=()=>{week=monday(new Date());say("");render();load()};
